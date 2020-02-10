@@ -38,6 +38,7 @@ import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -136,7 +137,7 @@ public class Camera extends AppCompatActivity {
             ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
-                    mBackgroundHandler.post(new ImageSaver(reader.acquireLatestImage()));
+                    mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage()));
                 }
             };
     private class ImageSaver implements Runnable {
@@ -290,6 +291,7 @@ public class Camera extends AppCompatActivity {
                     mRecordCaptureSession.close();
                     mIsRecording = false;
                     mRecordImageButton.setImageResource(R.mipmap.btn_video_online);
+                    startPreview();
                     mMediaRecorder.stop();
                     mMediaRecorder.reset();
 
@@ -297,7 +299,7 @@ public class Camera extends AppCompatActivity {
                     mediaStoreUpdateIntent.setData(Uri.fromFile(new File(mVideoFileName)));
                     sendBroadcast(mediaStoreUpdateIntent);
 
-                    startPreview();
+
                 } else {
                     checkWriteStoragePermission();
                 }
@@ -353,11 +355,12 @@ public class Camera extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        super.onPause();
+
         closeCamera();
 
         stopBackgroundThread();
 
-        super.onPause();
     }
 
     @Override
@@ -559,7 +562,7 @@ public class Camera extends AppCompatActivity {
     }
 
     private void startBackgroundThread() {
-        mBackgroundHandlerThread = new HandlerThread("Camera2VideoImage");
+        mBackgroundHandlerThread = new HandlerThread("SkyIsTheLimit");
         mBackgroundHandlerThread.start();
         mBackgroundHandler = new Handler(mBackgroundHandlerThread.getLooper());
     }
@@ -631,8 +634,8 @@ public class Camera extends AppCompatActivity {
     }
 
     private File createVideoFileName() throws IOException {
-        //String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String prepend = "JumpVideo.mp4";
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String prepend = "JumpVideo_" + timestamp + ".mp4";
         //File videoFile = File.createTempFile(prepend , ".mp4" , mVideoFolder);
         File videoFile = new File(mVideoFolder , prepend);
         mVideoFileName = videoFile.getAbsolutePath();
