@@ -161,6 +161,11 @@ public class Camera extends AppCompatActivity {
                 e.printStackTrace();
             } finally {
                 mImage.close();
+
+                Intent mediaStoreUpdateIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                mediaStoreUpdateIntent.setData(Uri.fromFile(new File(mImageFileName)));
+                sendBroadcast(mediaStoreUpdateIntent);
+
                 if(fileOutputStream != null) {
                     try {
                         fileOutputStream.close();
@@ -285,11 +290,14 @@ public class Camera extends AppCompatActivity {
                     mRecordCaptureSession.close();
                     mIsRecording = false;
                     mRecordImageButton.setImageResource(R.mipmap.btn_video_online);
-
-                    startPreview();
                     mMediaRecorder.stop();
                     mMediaRecorder.reset();
 
+                    Intent mediaStoreUpdateIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                    mediaStoreUpdateIntent.setData(Uri.fromFile(new File(mVideoFileName)));
+                    sendBroadcast(mediaStoreUpdateIntent);
+
+                    startPreview();
                 } else {
                     checkWriteStoragePermission();
                 }
