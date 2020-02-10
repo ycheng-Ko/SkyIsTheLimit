@@ -316,7 +316,12 @@ public class Camera extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode , permissions , grantResults);
         if(requestCode == REQUSET_CAMERA_PERMISSION_RESULT) {
             if(grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getApplicationContext() , "Application will not run without camera" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        "Application will not run without camera" , Toast.LENGTH_SHORT).show();
+            }
+            if(grantResults[1] != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getApplicationContext(),
+                        "Application will not have audio on record" , Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -404,7 +409,8 @@ public class Camera extends AppCompatActivity {
                     if(shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
                         Toast.makeText(this , "Video app required access to camera" , Toast.LENGTH_SHORT).show();
                     }
-                    requestPermissions(new String[] {Manifest.permission.CAMERA} , REQUSET_CAMERA_PERMISSION_RESULT);
+                    requestPermissions(new String[] {Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO
+                    } , REQUSET_CAMERA_PERMISSION_RESULT);
                 }
             } else {
                 cameraManager.openCamera(mCameraId , mCameraDeviceStateCallback , mBackgroundHandler);
@@ -684,12 +690,14 @@ public class Camera extends AppCompatActivity {
 
     private void setupMediaRecorder() throws IOException{
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
+        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mMediaRecorder.setOutputFile(mVideoFileName);
         mMediaRecorder.setVideoEncodingBitRate(24000000);
         mMediaRecorder.setVideoFrameRate(30); // maybe can try 60 or 120 => A7 only supports 30fps lol
         mMediaRecorder.setVideoSize(mVideoSize.getWidth() , mVideoSize.getHeight());
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         mMediaRecorder.setOrientationHint(mTotalRotation);
         mMediaRecorder.prepare();
     }
