@@ -80,9 +80,10 @@ public class AnalyzeVideo extends AppCompatActivity {
                 int mCurrent_msec = mVideoView.getCurrentPosition(); // return msec !!!
                 //Toast.makeText(getApplicationContext(), "Current time" + mCurrent_msec+300, Toast.LENGTH_SHORT).show();
 
-                mVideoView.seekTo(mCurrent_msec + 33);
+                mVideoView.seekTo(mCurrent_msec + 100);
                 mVideoIsPlaying = false;
                 mStartandPause.setImageResource(R.mipmap.btn_videostart);
+                mVideoView.start();
                 mVideoView.pause();
             }
         });
@@ -91,9 +92,10 @@ public class AnalyzeVideo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int mCurrent_msec = mVideoView.getCurrentPosition(); // return msec !!!
-                mVideoView.seekTo(mCurrent_msec - 33);
+                mVideoView.seekTo(mCurrent_msec - 100);
                 mVideoIsPlaying = false;
                 mStartandPause.setImageResource(R.mipmap.btn_videostart);
+                mVideoView.start();
                 mVideoView.pause();
             }
         });
@@ -140,5 +142,4 @@ public class AnalyzeVideo extends AppCompatActivity {
             }
         });
     }
-
 }

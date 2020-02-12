@@ -3,6 +3,7 @@ package com.example.skyisthelimit;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -16,19 +17,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btn_start = findViewById(R.id.btn_start);
+        final Button btn_start = findViewById(R.id.btn_start);
+        btn_start.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Paintingwithchocolate-K5mo.ttf"));
 
         btn_start.setOnClickListener(new View.OnClickListener() {
 
-
             @Override
             public void onClick(View v) {
-//                DisplayMetrics dm = new DisplayMetrics();
-//                getWindowManager().getDefaultDisplay().getMetrics(dm);
-//                setTitle("寬 , 高 = " + dm.widthPixels + " , " + dm.heightPixels);
                 Intent intent = new Intent(MainActivity.this , Camera.class);
                 startActivity( intent );
-
             }
         });
     }
