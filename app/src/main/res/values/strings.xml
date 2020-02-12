@@ -2,4 +2,11 @@
     <string name="app_name">SkyIsTheLimit</string>
     <string name="video_button">Video Record Button</string>
     <string name="camera_button">Camera Capture Button</string>
+    <string name="video_start_and_pause">Video start and pause button</string>
+    <string name="video_back">Video back-playing button</string>
+    <string name="video_front">Video front-playing button</string>
+    <string name="take_off">Capture take-off timing button</string>
+    <string name="land_down">Capture land-down timing button</string>
+    <string name="Capture_timing_ok">Both take-off and land-down timing has captured</string>
+
 </resources>

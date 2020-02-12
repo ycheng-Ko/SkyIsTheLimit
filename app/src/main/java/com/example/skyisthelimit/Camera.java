@@ -46,6 +46,7 @@ import androidx.core.content.ContextCompat;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -109,8 +110,8 @@ public class Camera extends AppCompatActivity {
             } else {
                 startPreview();
             }
-            //Toast.makeText(getApplicationContext(),
-            //        "Camera connection made! YCheng thanks you ^_^", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),
+                    "Camera connection made! YCheng thanks you ^_^", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -239,6 +240,7 @@ public class Camera extends AppCompatActivity {
 
     private ImageButton mRecordImageButton;
     private ImageButton mStillImageButton;
+    private ImageButton mVideoDoneButton;
     private boolean mIsRecording = false;
 
     private File mVideoFolder;
@@ -253,6 +255,35 @@ public class Camera extends AppCompatActivity {
         ORIENTATIONS.append(Surface.ROTATION_180 , 180);
         ORIENTATIONS.append(Surface.ROTATION_270 , 270);
     }
+    /*
+    public class VideoInformation implements Serializable {
+        private String anaVideoFileName;
+        private File anaVideoFolder;
+
+
+        private VideoInformation(String file, File folder) {
+            anaVideoFileName = file;
+            anaVideoFolder = folder;
+        }
+
+        public String getAnaVideoFileName() {
+            return anaVideoFileName;
+        }
+
+        private void setAnaVideoFileName(String anaVideoFileName) {
+            this.anaVideoFileName = anaVideoFileName;
+        }
+
+        public File getAnaVideoFolder() {
+            return anaVideoFolder;
+        }
+
+        private void setAnaVideoFolder(File anaVideoFolder) {
+            this.anaVideoFolder = anaVideoFolder;
+        }
+    }
+
+     */
 
     private static class CompareSizeByArea implements Comparator<Size> {
 
@@ -275,6 +306,7 @@ public class Camera extends AppCompatActivity {
         mTextureView = (TextureView) findViewById(R.id.textureView);
         mRecordImageButton = (ImageButton) findViewById(R.id.videoOnlineImageButton);
         mStillImageButton = (ImageButton) findViewById(R.id.cameraImageButton2);
+        mVideoDoneButton = (ImageButton) findViewById(R.id.videoDoneButton);
         mStillImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -299,10 +331,22 @@ public class Camera extends AppCompatActivity {
                     mediaStoreUpdateIntent.setData(Uri.fromFile(new File(mVideoFileName)));
                     sendBroadcast(mediaStoreUpdateIntent);
 
-
+                    mVideoDoneButton.setVisibility(View.VISIBLE);
                 } else {
                     checkWriteStoragePermission();
                 }
+            }
+        });
+
+        mVideoDoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Camera.this , AnalyzeVideo.class);
+                //VideoInformation mVideoInformation = new VideoInformation(mVideoFileName, mVideoFolder);
+                //intent.putExtra("mVideoInformation ", mVideoInformation);
+                intent.putExtra("mVideoFileName", mVideoFileName);
+                intent.putExtra("mVideoFolder", mVideoFolder);
+                startActivity( intent );
             }
         });
     }
@@ -636,6 +680,7 @@ public class Camera extends AppCompatActivity {
     private File createVideoFileName() throws IOException {
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String prepend = "JumpVideo_" + timestamp + ".mp4";
+        //String prepend = "JumpVideo.mp4";
         //File videoFile = File.createTempFile(prepend , ".mp4" , mVideoFolder);
         File videoFile = new File(mVideoFolder , prepend);
         mVideoFileName = videoFile.getAbsolutePath();
@@ -705,10 +750,11 @@ public class Camera extends AppCompatActivity {
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mMediaRecorder.setOutputFile(mVideoFileName);
         mMediaRecorder.setVideoEncodingBitRate(24000000);
-        mMediaRecorder.setVideoFrameRate(30); // maybe can try 60 or 120 => A7 only supports 30fps lol
+
         mMediaRecorder.setVideoSize(mVideoSize.getWidth() , mVideoSize.getHeight());
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+        mMediaRecorder.setVideoFrameRate(30); // maybe can try 60 or 120 => A7 only supports 30fps lol
         mMediaRecorder.setOrientationHint(mTotalRotation);
         mMediaRecorder.prepare();
     }
