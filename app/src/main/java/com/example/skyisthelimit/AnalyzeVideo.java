@@ -86,12 +86,8 @@ public class AnalyzeVideo extends AppCompatActivity {
                 mVideoIsPlaying = false;
                 mStartandPause.setImageResource(R.mipmap.btn_videostart);
 
-                mVideoView.start();
                 mVideoView.pause();
-                //callpause(next, mVideoView);
-                //mVideoView.pause();
 
-                //Toast.makeText(getApplicationContext(), "Expected: " + next + "Current time: " + (float)mVideoView.getCurrentPosition() / 1000.0, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -104,9 +100,7 @@ public class AnalyzeVideo extends AppCompatActivity {
                 mVideoIsPlaying = false;
                 mStartandPause.setImageResource(R.mipmap.btn_videostart);
 ;
-                mVideoView.start();
                 mVideoView.pause();
-                //Toast.makeText(getApplicationContext(), "Expected: " + next + "Current time: " + (float)mVideoView.getCurrentPosition() / 1000.0, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -155,7 +149,7 @@ public class AnalyzeVideo extends AppCompatActivity {
             }
         });
 
-
+        /*
         mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -171,6 +165,6 @@ public class AnalyzeVideo extends AppCompatActivity {
                 });
             }
         });
-
+        */
     }
 }
