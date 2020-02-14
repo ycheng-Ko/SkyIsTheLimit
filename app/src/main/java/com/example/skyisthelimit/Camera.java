@@ -344,9 +344,12 @@ public class Camera extends AppCompatActivity {
                 Intent intent = new Intent(Camera.this , AnalyzeVideo.class);
                 //VideoInformation mVideoInformation = new VideoInformation(mVideoFileName, mVideoFolder);
                 //intent.putExtra("mVideoInformation ", mVideoInformation);
+
                 intent.putExtra("mVideoFileName", mVideoFileName);
                 intent.putExtra("mVideoFolder", mVideoFolder);
                 startActivity( intent );
+
+                mVideoDoneButton.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -754,7 +757,7 @@ public class Camera extends AppCompatActivity {
         mMediaRecorder.setVideoSize(mVideoSize.getWidth() , mVideoSize.getHeight());
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-        mMediaRecorder.setVideoFrameRate(30); // maybe can try 60 or 120 => A7 only supports 30fps lol
+        mMediaRecorder.setVideoFrameRate(1); // maybe can try 60 or 120 => A7 only supports 30fps lol(X) => set to 1 means every frame is key frame!!!
         mMediaRecorder.setOrientationHint(mTotalRotation);
         mMediaRecorder.prepare();
     }

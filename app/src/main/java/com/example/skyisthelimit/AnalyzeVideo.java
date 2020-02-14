@@ -3,8 +3,10 @@ package com.example.skyisthelimit;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -51,7 +53,7 @@ public class AnalyzeVideo extends AppCompatActivity {
         mVideoControl.setAnchorView(mVideoView);
         mVideoView.setMediaController(mVideoControl);
 
-        Uri mVideoUri = Uri.parse(mVideoFileName);
+        final Uri mVideoUri = Uri.parse(mVideoFileName);
         mVideoView.setVideoURI(mVideoUri);
         //mVideoView.start();
 
@@ -74,29 +76,37 @@ public class AnalyzeVideo extends AppCompatActivity {
             }
         });
 
+
         mFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int mCurrent_msec = mVideoView.getCurrentPosition(); // return msec !!!
-                //Toast.makeText(getApplicationContext(), "Current time" + mCurrent_msec+300, Toast.LENGTH_SHORT).show();
+                int next = mVideoView.getCurrentPosition() + 33; // return msec !!!
 
-                mVideoView.seekTo(mCurrent_msec + 100);
+                mVideoView.seekTo( next );
                 mVideoIsPlaying = false;
                 mStartandPause.setImageResource(R.mipmap.btn_videostart);
+
                 mVideoView.start();
                 mVideoView.pause();
+                //callpause(next, mVideoView);
+                //mVideoView.pause();
+
+                //Toast.makeText(getApplicationContext(), "Expected: " + next + "Current time: " + (float)mVideoView.getCurrentPosition() / 1000.0, Toast.LENGTH_SHORT).show();
             }
         });
 
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int mCurrent_msec = mVideoView.getCurrentPosition(); // return msec !!!
-                mVideoView.seekTo(mCurrent_msec - 100);
+                int next = mVideoView.getCurrentPosition() - 33; // return msec !!!
+
+                mVideoView.seekTo( next );
                 mVideoIsPlaying = false;
                 mStartandPause.setImageResource(R.mipmap.btn_videostart);
+;
                 mVideoView.start();
                 mVideoView.pause();
+                //Toast.makeText(getApplicationContext(), "Expected: " + next + "Current time: " + (float)mVideoView.getCurrentPosition() / 1000.0, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -139,7 +149,28 @@ public class AnalyzeVideo extends AppCompatActivity {
                 intent.putExtra("time_Take_off", time_Take_off);
                 intent.putExtra("time_Land_down", time_Land_down);
                 startActivity( intent );
+                mIsTakeOffOk = false;
+                mIsLandDownOk = false;
+                mCaptureTimingOk.setVisibility(View.INVISIBLE);
             }
         });
+
+
+        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.setOnSeekCompleteListener(new MediaPlayer.OnSeekCompleteListener() {
+                    @Override
+                    public void onSeekComplete(MediaPlayer mp) {
+                        Integer now = mVideoView.getCurrentPosition();
+                        Log.d("CV2I" , now.toString());
+
+                        Toast.makeText(getApplicationContext(), "Current time: " + (float)now/ 1000.0, Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+        });
+
     }
 }
