@@ -31,8 +31,8 @@ public class MaxHeight extends AppCompatActivity {
         mHangTime = findViewById(R.id.hangtime);
         mMaxHeight = findViewById(R.id.maxheight);
 
-        mHangTime.setText("  Hang time:   " + String.format("%.3f", time_HangTime) + " (secs)");
-        mMaxHeight.setText("  Vertical jump: " + String.format("%.3f", maxHeight) + " (cms)");
+        mHangTime.setText("  Hang time:   " + String.format("%.3f", time_HangTime) + " (sec)");
+        mMaxHeight.setText("  Vertical jump: " + String.format("%.3f", maxHeight) + " (cm)");
         mHangTime.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Paintingwithchocolate-K5mo.ttf"));
         mMaxHeight.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Paintingwithchocolate-K5mo.ttf"));
     }

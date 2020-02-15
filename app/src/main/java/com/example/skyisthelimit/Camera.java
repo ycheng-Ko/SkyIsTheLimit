@@ -111,7 +111,7 @@ public class Camera extends AppCompatActivity {
                 startPreview();
             }
             Toast.makeText(getApplicationContext(),
-                    "Camera connection made! YCheng thanks you ^_^", Toast.LENGTH_SHORT).show();
+                    "Hi man, welcome to YCheng's android app ^_^ ", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -392,7 +392,7 @@ public class Camera extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 Toast.makeText(this,
-                        "Premission successfully granted! YCheng thanks you ^_^", Toast.LENGTH_SHORT).show();
+                        "Premission successfully granted!\n YCheng thanks you ^_^", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this,
                         "App needs to save video to run", Toast.LENGTH_SHORT).show();

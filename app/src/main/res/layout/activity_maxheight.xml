@@ -1,35 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/slamdunk"
     tools:context=".MaxHeight">
 
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.80"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <TextView
         android:id="@+id/hangtime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="1450px"
         android:background="?attr/actionModeBackground"
-        android:text="hang time: 0.777 secs"
+        android:text="hang time: 0.777 sec"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="#391183"
         android:textSize="26sp"
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal1"
         />
 
     <TextView
         android:id="@+id/maxheight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/hangtime"
-        android:layout_marginBottom="-41sp"
         android:background="?attr/actionModeBackground"
-        android:text="max height: 78.78 cms"
+        android:text="max height: 77.77 cm"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="#391183"
         android:textSize="26sp"
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal1"
         />
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

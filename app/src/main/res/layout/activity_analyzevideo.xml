@@ -1,89 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AnalyzeVideo">
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".AnalyzeVideo">
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7"
+        />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.83"
+        />
 
-        <VideoView
-            android:id="@+id/videoView"
-            android:layout_width="wrap_content"
-            android:layout_height="1450px"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="videoView"
-            />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.94"
+        />
 
-        <ImageButton
-            android:id="@+id/btn_videoFront"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/btn_videofront"
-            android:contentDescription="@string/video_front"
+    <VideoView
+        android:id="@+id/videoView"
+        android:text="videoView"
 
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="120dp"
-            android:layout_marginEnd="60dp"
-            />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal1"
+        />
 
-        <ImageButton
-            android:id="@+id/btn_videoBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/btn_videoback"
-            android:contentDescription="@string/video_back"
+    <ImageButton
+        android:id="@+id/btn_videoBack"
+        android:contentDescription="@string/video_back"
+        android:src="@mipmap/btn_videoback"
 
-            android:layout_alignParentStart="true"
-            android:layout_alignBottom="@+id/btn_videoFront"
-            android:layout_marginStart="60dp"
-            />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btn_videoStartandPause"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal2"
+        />
 
-        <ImageButton
-            android:id="@+id/btn_videoStartandPause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/btn_videostart"
-            android:contentDescription="@string/video_start_and_pause"
+    <ImageButton
+        android:id="@+id/btn_videoStartandPause"
+        android:contentDescription="@string/video_start_and_pause"
+        android:src="@mipmap/btn_videopause"
 
-            android:layout_alignBottom="@+id/btn_videoFront"
-            android:layout_alignStart="@+id/btn_videoBack"
-            android:layout_marginStart="114dp"
-            />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/btn_videoBack"
+        app:layout_constraintRight_toLeftOf="@+id/btn_videoFront"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal2"
+        />
 
-        <ImageButton
-            android:id="@+id/btn_takeoff"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@mipmap/btn_takeoff"
-            android:contentDescription="@string/take_off"
+    <ImageButton
+        android:id="@+id/btn_videoFront"
+        android:contentDescription="@string/video_front"
+        android:src="@mipmap/btn_videofront"
 
-            android:layout_alignBottom="@+id/btn_landdown"
-            android:layout_alignStart="@+id/btn_videoBack"
-            />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/btn_videoStartandPause"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal2"
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
-        <ImageButton
-            android:id="@+id/btn_landdown"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@mipmap/btn_landdown"
-            android:contentDescription="@string/land_down"
+    <ImageButton
+        android:id="@+id/btn_takeoff"
+        android:contentDescription="@string/take_off"
+        android:src="@mipmap/btn_takeoff"
 
-            android:layout_alignBottom="@+id/btn_videoFront"
-            android:layout_alignEnd="@+id/btn_videoFront"
-            android:layout_marginBottom="-80dp"
-            />
-        <ImageButton
-            android:id="@+id/btn_captureTimingOk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/btn_done"
-            android:contentDescription="@string/Capture_timing_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btn_captureTimingOk"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal3"
+        />
 
-            android:layout_alignStart="@+id/btn_videoStartandPause"
-            android:layout_alignBottom="@id/btn_landdown"
-            android:visibility="invisible"
-            />
-</RelativeLayout>
+    <ImageButton
+        android:id="@+id/btn_landdown"
+        android:contentDescription="@string/land_down"
+        android:src="@mipmap/btn_landdown"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/btn_captureTimingOk"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal3"
+        />
+
+    <ImageButton
+        android:id="@+id/btn_captureTimingOk"
+        android:contentDescription="@string/Capture_timing_ok"
+        android:src="@mipmap/btn_done"
+        android:visibility="invisible"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/btn_takeoff"
+        app:layout_constraintRight_toLeftOf="@+id/btn_landdown"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal3"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

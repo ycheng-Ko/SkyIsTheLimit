@@ -27,7 +27,7 @@ public class AnalyzeVideo extends AppCompatActivity {
     private ImageButton mStartandPause;
     private ImageButton mFront;
     private ImageButton mBack;
-    private Boolean mVideoIsPlaying = false;
+    private Boolean mVideoIsPlaying = true;
 
     private ImageButton mTakeOff;
     private ImageButton mLandDown;
@@ -55,7 +55,7 @@ public class AnalyzeVideo extends AppCompatActivity {
 
         final Uri mVideoUri = Uri.parse(mVideoFileName);
         mVideoView.setVideoURI(mVideoUri);
-        //mVideoView.start();
+        mVideoView.start();
 
         mStartandPause = (ImageButton) findViewById(R.id.btn_videoStartandPause);
         mFront = (ImageButton) findViewById(R.id.btn_videoFront);
