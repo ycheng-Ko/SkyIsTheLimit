@@ -12,22 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.84"
+        app:layout_constraintGuide_percent="0.85"
         />
 
 
     <Button
         android:id="@+id/btn_start"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="0dp"
         android:text="MEASURE  YOUR  LIMIT"
+
 
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="#391183"
         android:textSize="27sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline_horizontal"
-        android:layout_marginLeft="-10dp"
-        android:layout_marginRight="-10dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

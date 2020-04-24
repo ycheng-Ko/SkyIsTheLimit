@@ -111,7 +111,7 @@ public class Camera extends AppCompatActivity {
                 startPreview();
             }
             Toast.makeText(getApplicationContext(),
-                    "Hi man, welcome to YCheng's android app ^_^ ", Toast.LENGTH_LONG).show();
+                    "Hi guys, welcome to YCheng's android app ^_^ ", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -255,35 +255,6 @@ public class Camera extends AppCompatActivity {
         ORIENTATIONS.append(Surface.ROTATION_180 , 180);
         ORIENTATIONS.append(Surface.ROTATION_270 , 270);
     }
-    /*
-    public class VideoInformation implements Serializable {
-        private String anaVideoFileName;
-        private File anaVideoFolder;
-
-
-        private VideoInformation(String file, File folder) {
-            anaVideoFileName = file;
-            anaVideoFolder = folder;
-        }
-
-        public String getAnaVideoFileName() {
-            return anaVideoFileName;
-        }
-
-        private void setAnaVideoFileName(String anaVideoFileName) {
-            this.anaVideoFileName = anaVideoFileName;
-        }
-
-        public File getAnaVideoFolder() {
-            return anaVideoFolder;
-        }
-
-        private void setAnaVideoFolder(File anaVideoFolder) {
-            this.anaVideoFolder = anaVideoFolder;
-        }
-    }
-
-     */
 
     private static class CompareSizeByArea implements Comparator<Size> {
 
@@ -321,11 +292,12 @@ public class Camera extends AppCompatActivity {
                     mChronometer.stop();
                     mChronometer.setVisibility(View.INVISIBLE);
                     mRecordCaptureSession.close();
+
                     mIsRecording = false;
                     mRecordImageButton.setImageResource(R.mipmap.btn_video_online);
-                    startPreview();
                     mMediaRecorder.stop();
                     mMediaRecorder.reset();
+                    startPreview();
 
                     Intent mediaStoreUpdateIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                     mediaStoreUpdateIntent.setData(Uri.fromFile(new File(mVideoFileName)));
@@ -439,6 +411,7 @@ public class Camera extends AppCompatActivity {
                 boolean swapRotation = mTotalRotation == 90 || mTotalRotation == 270;
                 int rotatedWidth = width;
                 int rotatedHeight = height;
+
                 if(swapRotation) {
                     rotatedWidth = height;
                     rotatedHeight = width;
@@ -472,7 +445,6 @@ public class Camera extends AppCompatActivity {
                 }
             } else {
                 cameraManager.openCamera(mCameraId , mCameraDeviceStateCallback , mBackgroundHandler);
-
             }
         } catch (CameraAccessException e) {
             e.printStackTrace();
@@ -631,24 +603,6 @@ public class Camera extends AppCompatActivity {
         return (sensorOrientation + deviceOrientation + 360) % 360;
     }
 
-    /*
-    private static Size chooseOptimalSize(Size[] choices , int width , int height) {
-        List<Size> bigEnough = new ArrayList<Size>();
-        for (Size option: choices) {
-            if(option.getHeight() == option.getWidth() * height / width &&
-                option.getWidth() >= width && option.getHeight() >= height) {
-                bigEnough.add(option);
-            }
-        }
-        if(bigEnough.size() > 0) {
-            return Collections.min(bigEnough , new CompareSizeByArea());
-        } else {
-            return choices[0];
-        }
-    }
-
-     */
-
     private static Size chooseOptimalSize(Size[] choices, int width, int height) {
         Size bigEnough = null;
         int minAreaDiff = Integer.MAX_VALUE;
@@ -667,10 +621,7 @@ public class Camera extends AppCompatActivity {
             Arrays.sort(choices,new CompareSizeByArea());
             return choices[0];
         }
-
     }
-
-
 
     private void createVideoFolder() {
         File movieFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
@@ -711,6 +662,7 @@ public class Camera extends AppCompatActivity {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG, "Permission is granted");
                 mIsRecording = true;
                 mRecordImageButton.setImageResource(R.mipmap.btn_video_busy);
                 try {
@@ -721,7 +673,7 @@ public class Camera extends AppCompatActivity {
 
                 startRecord();
 
-                mMediaRecorder.start();
+                mMediaRecorder.start();  // error occurs here ?
                 mChronometer.setBase(SystemClock.elapsedRealtime());
                 mChronometer.setVisibility(View.VISIBLE);
                 mChronometer.start();
@@ -753,11 +705,11 @@ public class Camera extends AppCompatActivity {
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mMediaRecorder.setOutputFile(mVideoFileName);
         mMediaRecorder.setVideoEncodingBitRate(24000000);
-
+        mMediaRecorder.setVideoFrameRate(1);
         mMediaRecorder.setVideoSize(mVideoSize.getWidth() , mVideoSize.getHeight());
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-        mMediaRecorder.setVideoFrameRate(1); // maybe can try 60 or 120 => A7 only supports 30fps lol(X) => set to 1 means every frame is key frame!!!
+
         mMediaRecorder.setOrientationHint(mTotalRotation);
         mMediaRecorder.prepare();
     }
